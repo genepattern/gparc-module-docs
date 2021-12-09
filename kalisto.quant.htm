@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Manual</title>
+    <meta name="description" content="">
+    <meta name="author" content="Pachter Lab">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="https://pachterlab.github.io/kallisto/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="https://pachterlab.github.io/kallisto/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="https://pachterlab.github.io/kallisto/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="https://pachterlab.github.io/kallisto/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="https://pachterlab.github.io/kallisto">kallisto</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="https://pachterlab.github.io/kallisto/about">About</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="https://pachterlab.github.io/kallisto/apps">Apps</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="https://pachterlab.github.io/kallisto/download">Download</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="https://pachterlab.github.io/kallisto/faq">FAQ</a></li>
+      	
+      
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li class="active"><a href="https://pachterlab.github.io/kallisto/manual" class="active">Manual</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="https://pachterlab.github.io/kallisto/source">Source</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="https://pachterlab.github.io/kallisto/starting">Getting Started</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+
+<div class="page-header">
+  <h1>Manual </h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    
+<p>Typing <code class="highlighter-rouge">kallisto</code> produces a list of usage options, which are:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto 0.43.0
+
+Usage: kallisto &lt;CMD&gt; [arguments] ..
+
+Where &lt;CMD&gt; can be one of:
+
+    index         Builds a kallisto index
+    quant         Runs the quantification algorithm
+    pseudo        Runs the pseudoalignment step
+    h5dump        Converts HDF5-formatted results to plaintext
+    version       Prints version information
+    cite          Prints citation information
+
+Running kallisto &lt;CMD&gt; without arguments prints usage information for &lt;CMD&gt;
+
+</code></pre>
+</div>
+<p>The usage commands are:</p>
+
+<h4 id="index">index</h4>
+
+<p><code class="highlighter-rouge">kallisto index</code> builds an index from a FASTA formatted file of target sequences. The arguments for the index command are:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto 0.43.0
+Builds a kallisto index
+
+Usage: kallisto index [arguments] FASTA-files
+
+Required argument:
+-i, --index=STRING          Filename for the kallisto index to be constructed
+
+Optional argument:
+-k, --kmer-size=INT         k-mer (odd) length (default: 31, max value: 31)
+    --make-unique           Replace repeated target names with unique names
+</code></pre>
+</div>
+
+<p>The Fasta file supplied can be either in plaintext or gzipped format.</p>
+
+<h4 id="quant">quant</h4>
+
+<p><code class="highlighter-rouge">kallisto quant</code> runs the quantification algorithm. The arguments for the quant command are:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto 0.43.0
+Computes equivalence classes for reads and quantifies abundances
+
+Usage: kallisto quant [arguments] FASTQ-files
+
+Required arguments:
+-i, --index=STRING            Filename for the kallisto index to be used for
+                              quantification
+-o, --output-dir=STRING       Directory to write output to
+
+Optional arguments:
+    --bias                    Perform sequence based bias correction
+-b, --bootstrap-samples=INT   Number of bootstrap samples (default: 0)
+    --seed=INT                Seed for the bootstrap sampling (default: 42)
+    --plaintext               Output plaintext instead of HDF5
+    --single                  Quantify single-end reads
+    --fr-stranded             Strand specific reads, first read forward
+    --rf-stranded             Strand specific reads, first read reverse
+-l, --fragment-length=DOUBLE  Estimated average fragment length
+-s, --sd=DOUBLE               Estimated standard deviation of fragment length
+                              (default: value is estimated from the input data)
+-t, --threads=INT             Number of threads to use (default: 1)
+    --pseudobam               Output pseudoalignments in SAM format to stdout
+</code></pre>
+</div>
+
+<p><strong>kallisto</strong> can process either single-end or paired-end reads. The default running mode is paired-end and requires an even number of FASTQ files represented as pairs, e.g.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto quant -i index -o output pairA_1.fastq pairA_2.fastq pairB_1.fastq pairB_2.fastq
+</code></pre>
+</div>
+
+<p>For single-end mode you supply the <code class="highlighter-rouge">--single</code> flag, as well as the <code class="highlighter-rouge">-l</code> and <code class="highlighter-rouge">-s</code> options, and list any number of FASTQ files, e.g</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto quant -i index -o output --single -l 200 -s 20 file1.fastq.gz file2.fastq.gz file3.fastq.gz
+</code></pre>
+</div>
+
+<p>FASTQ files can be either plaintext or
+gzipped.</p>
+
+<p><strong>Important note:</strong> only supply one sample at a time to <em>kallisto</em>. The
+multiple FASTQ (pair) option is for users who have samples that span multiple
+FASTQ files.</p>
+
+<p>In the case of single-end reads, the -l option must be used to specify the average fragment length. Typical Illumina libraries produce fragment lengths ranging from 180–200 bp but it’s best to determine this from a library quantification with an instrument such as an Agilent Bioanalyzer. For paired-end reads, the average fragment length can be directly estimated from the reads and the program will do so if -l is not used (this is the preferred run mode).</p>
+
+<p>The number of bootstrap samples is specified using -b. Note that because of the large amount of data that may be produced when the number of bootstrap samples is high, <strong>kallisto</strong> outputs bootstrap results in HDF5 format. The <code class="highlighter-rouge">h5dump</code> command can be used afterwards to convert this output to plaintext, however most convenient is to analyze bootstrap results with <strong>sleuth</strong>.</p>
+
+<p><code class="highlighter-rouge">kallisto quant</code> produces three <strong>output</strong> files by default:</p>
+
+<ul>
+  <li><strong>abundances.h5</strong> is a HDF5 binary file containing run info, abundance
+esimates, bootstrap estimates, and transcript length information length. This
+file can be read in by <strong>sleuth</strong></li>
+  <li><strong>abundances.tsv</strong> is a plaintext file of the abundance estimates. It does
+not contains bootstrap estimates. Please use the <code class="highlighter-rouge">--plaintext</code> mode to output
+plaintext abundance estimates. Alternatively, <code class="highlighter-rouge">kallisto h5dump</code> can be used
+to output an HDF5 file to plaintext. The first line contains a header for
+each column, including <a href="https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/">estimated counts, TPM, effective length</a>.</li>
+  <li><strong>run_info.json</strong> is a json file containing information about the run</li>
+</ul>
+
+<h5 id="optional-arguments">Optional arguments</h5>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">--bias</code> learns parameters for a model of sequences specific bias and corrects the abundances accordlingly.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-t, --threads</code> specifies the number of threads to be used both for pseudoalignment and running bootstrap. The default value is 1 thread, specifying more than the number of bootstraps or the number of cores on your machine has no additional effect.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">--fr-stranded</code> runs kallisto in strand specific mode, only fragments where the <strong>first</strong> read in the pair pseudoaligns to the <strong>forward</strong> strand of a transcript are processed. If a fragment pseudoaligns to multiple transcripts, only the transcripts that are consistent with the first read are kept.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">--rf-stranded</code> same as <code class="highlighter-rouge">--fr-stranded</code> but the <strong>first</strong> read maps to the <strong>reverse</strong> strand of a transcript.</p>
+  </li>
+</ul>
+
+<h5 id="pseudobam">Pseudobam</h5>
+
+<p><code class="highlighter-rouge">--pseudobam</code> outputs all pseudoalignments in SAM format to the standard output. The stream can either be redirected into a file, or converted to bam using <code class="highlighter-rouge">samtools</code>.</p>
+
+<p>For example</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto quant -i index -o out --pseudobam r1.fastq r2.fastq &gt; out.sam
+</code></pre>
+</div>
+
+<p>or by piping directly into <code class="highlighter-rouge">samtools</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto quant -i index -o out --pseudobam r1.fastq r2.fastq | samtools view -Sb - &gt; out.bam
+</code></pre>
+</div>
+
+<p>A detailed description of the SAM output is <a href="pseudobam.html">here</a>.</p>
+
+<h4 id="pseudo">pseudo</h4>
+
+<p><code class="highlighter-rouge">kallisto pseudo</code> runs only the pseudoalignment step and is meant for usage in single cell RNA-seq. The arguments for the pseudo command are:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto 0.43.0
+Computes equivalence classes for reads and quantifies abundances
+
+Usage: kallisto pseudo [arguments] FASTQ-files
+
+Required arguments:
+-i, --index=STRING            Filename for the kallisto index to be used for
+                              pseudoalignment
+-o, --output-dir=STRING       Directory to write output to
+
+Optional arguments:
+-u  --umi                     First file in pair is a UMI file
+-b  --batch=FILE              Process files listed in FILE
+    --single                  Quantify single-end reads
+-l, --fragment-length=DOUBLE  Estimated average fragment length
+-s, --sd=DOUBLE               Estimated standard deviation of fragment length
+                              (default: value is estimated from the input data)
+-t, --threads=INT             Number of threads to use (default: 1)
+    --pseudobam               Output pseudoalignments in SAM format to stdout
+</code></pre>
+</div>
+
+<p>The form of the command and the meaning of the parameters are identical to the quant command. However, pseudo does not run the EM-algorithm to quantify abundances. In addition the pseudo command has an option to specify many cells in a batch file, e.g.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto pseudo -i index -o output -b batch.txt
+</code></pre>
+</div>
+
+<p>which will read information about each cell in the <code class="highlighter-rouge">batch.txt</code> file and process all cells simultaneously.</p>
+
+<p>The format of the batch file is</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#id file1 file 2
+cell1 cell1_1.fastq.gz cell1_1.fastq.gz
+cell2 cell2_1.fastq.gz cell2_1.fastq.gz
+cell3 cell3_1.fastq.gz cell3_1.fastq.gz
+...
+</code></pre>
+</div>
+
+<p>where the first column is the id of the cell and the next two fields are the corresponding files containing the paired end reads. Any lines starting with <code class="highlighter-rouge">#</code> are ignored. In the case of single end reads, specified with <code class="highlighter-rouge">--single</code>, only one file should be specified per cell.</p>
+
+<p>When the <code class="highlighter-rouge">--umi</code> option is specified the batch file is of the form</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#id umi-file file-1
+cell1 cell_1.umi cell_1.fastq.gz
+cell2 cell_2.umi cell_2.fastq.gz
+cell3 cell_3.umi cell_3.fastq.gz
+...
+</code></pre>
+</div>
+
+<p>where the umi-file is a text file of the form</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TTACACTGAC
+CCACTCTATG
+CAGGAAATCG
+...
+</code></pre>
+</div>
+
+<p>listing the Unique Molecular Identifier (UMI) for each read. The order of UMIs and reads in the fastq file must match. Even though the UMI data is single end we do not require or make use of the fragment length.</p>
+
+<p>When run in <strong>UMI</strong> mode kallisto will use the sequenced reads to pseudoalign and find an equivalence class, but rather than count the number of reads for each equivalence class, kallisto counts the number of distinct UMIs that pseudoalign to each equivalence class.</p>
+
+<h4 id="h5dump">h5dump</h4>
+
+<p><code class="highlighter-rouge">kallisto h5dump</code> converts
+<a href="https://www.hdfgroup.org/HDF5/whatishdf5.html">HDF5</a>-formatted results to
+plaintext. The arguments for the h5dump command are:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kallisto 0.43.0
+Converts HDF5-formatted results to plaintext
+
+Usage:  kallisto h5dump [arguments] abundance.h5
+
+Required argument:
+-o, --output-dir=STRING       Directory to write output to
+
+</code></pre>
+</div>
+
+<h4 id="version">version</h4>
+
+<p><code class="highlighter-rouge">kallisto version</code> displays the current version of the software.</p>
+
+<h4 id="cite">cite</h4>
+
+<p><code class="highlighter-rouge">kallisto cite</code> displays the citation for the paper.</p>
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; 2016 Pachter Lab
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div>
+
+    
+
+
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-62643000-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>
+
